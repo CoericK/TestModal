@@ -1,6 +1,7 @@
 package com.erickarroyo.testmodal;
 
 import android.app.Dialog;
+import android.app.TimePickerDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.graphics.Color;
@@ -54,8 +55,16 @@ public class LauncherActivity extends AppCompatActivity {
             public void onClick(View view) {
 
 
-                ImageModal imageModal = new ImageModal(self);
-                imageModal.showModal("https://orig00.deviantart.net/8a2e/f/2015/109/c/c/vertical_banner_of_the_new_ussr_by_glide08-d8q9zjn.png");
+                final ImageModal imageModal = new ImageModal(self);
+                imageModal.showModal(
+                        "https://orig00.deviantart.net/8a2e/f/2015/109/c/c/vertical_banner_of_the_new_ussr_by_glide08-d8q9zjn.png", new View.OnClickListener() {
+
+                            @Override
+                            public void onClick(View v) {
+                                imageModal.builder.dismiss();
+                                Log.d("MODAL", "Se cerró el modal");
+                            }
+                        });
                 /*
                 imageModal.showModal("https://orig00.deviantart.net/8a2e/f/2015/109/c/c/vertical_banner_of_the_new_ussr_by_glide08-d8q9zjn.png", new Runnable() {
                     @Override
