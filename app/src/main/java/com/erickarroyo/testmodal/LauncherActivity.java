@@ -57,11 +57,9 @@ public class LauncherActivity extends AppCompatActivity {
 
                 final ImageModal imageModal = new ImageModal(self);
                 imageModal.showModal(
-                        "https://orig00.deviantart.net/8a2e/f/2015/109/c/c/vertical_banner_of_the_new_ussr_by_glide08-d8q9zjn.png", new View.OnClickListener() {
-
+                        "https://orig00.deviantart.net/8a2e/f/2015/109/c/c/vertical_banner_of_the_new_ussr_by_glide08-d8q9zjn.png", new DialogInterface.OnDismissListener() {
                             @Override
-                            public void onClick(View v) {
-                                imageModal.builder.dismiss();
+                            public void onDismiss(DialogInterface dialog) {
                                 Log.d("MODAL", "Se cerró el modal");
                             }
                         });

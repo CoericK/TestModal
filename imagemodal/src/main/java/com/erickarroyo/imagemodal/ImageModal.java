@@ -58,7 +58,7 @@ public class ImageModal {
 
     }
 
-    public void showModal(String url, View.OnClickListener listener) {
+    public void showModal(String url, DialogInterface.OnDismissListener listener) {
         builder = new Dialog(context);
         builder.requestWindowFeature(Window.FEATURE_NO_TITLE);
         builder.getWindow().setBackgroundDrawable(
@@ -71,14 +71,14 @@ public class ImageModal {
         ImageView imageView = (ImageView) builder.findViewById(R.id.image_view);
 
 
-        imageButton.setOnClickListener(listener);
-
-        builder.setOnDismissListener(new DialogInterface.OnDismissListener() {
+        imageButton.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onDismiss(DialogInterface dialog) {
-                Log.d("MODAL_CLOSED", "modal_closed");
+            public void onClick(View v) {
+                builder.dismiss();
             }
         });
+
+        builder.setOnDismissListener(listener);
 
         Picasso.get().load(url).into(imageView);
 
