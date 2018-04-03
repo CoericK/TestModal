@@ -11,6 +11,8 @@ import android.view.Window;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 
+import com.squareup.picasso.Callback;
+import com.squareup.picasso.MemoryPolicy;
 import com.squareup.picasso.Picasso;
 
 public class ImageModal {
@@ -25,18 +27,15 @@ public class ImageModal {
     }
 
     public void showModal(String url) {
-        setup(url);
-        builder.show();
+        setup(url, null);
     }
 
 
     public void showModal(String url, DialogInterface.OnDismissListener listener) {
-        setup(url);
-        builder.setOnDismissListener(listener);
-        builder.show();
+        setup(url, listener);
     }
 
-    private void setup(String url) {
+    private void setup(String url, DialogInterface.OnDismissListener listener) {
         builder = new Dialog(context);
         builder.requestWindowFeature(Window.FEATURE_NO_TITLE);
         builder.getWindow().setBackgroundDrawable(
@@ -52,7 +51,24 @@ public class ImageModal {
 
             }
         });
+        if (listener != null) {
+            builder.setOnDismissListener(listener);
+        }
 
-        Picasso.get().load(url).into(imageView);
+        Picasso
+                .get()
+                .load(url)
+                .into(imageView, new Callback() {
+                    @Override
+                    public void onSuccess() {
+                        builder.show();
+                    }
+
+                    @Override
+                    public void onError(Exception e) {
+                        builder.show();
+                    }
+                });
+
     }
 }
