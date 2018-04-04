@@ -12,6 +12,7 @@ import android.view.WindowManager;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 
+import com.budiyev.android.circularprogressbar.CircularProgressBar;
 import com.squareup.picasso.Callback;
 import com.squareup.picasso.MemoryPolicy;
 import com.squareup.picasso.Picasso;
@@ -22,6 +23,7 @@ public class ImageModal {
     public Dialog builder;
     public ImageButton imageButton;
     public ImageView imageView;
+    public CircularProgressBar circularProgressBar;
 
     public ImageModal(Context context) {
         this.context = context;
@@ -57,6 +59,7 @@ public class ImageModal {
         builder.setContentView(R.layout.dialog_layout);
         imageButton = (ImageButton) builder.findViewById(R.id.close_modal_btn);
         imageView = (ImageView) builder.findViewById(R.id.image_view);
+        circularProgressBar = (CircularProgressBar) builder.findViewById(R.id.progress_bar);
 
         imageButton.setBackground(
                 new ColorDrawable(android.graphics.Color.TRANSPARENT));
@@ -74,7 +77,17 @@ public class ImageModal {
         Picasso
                 .get()
                 .load(url)
-                .into(imageView);
+                .into(imageView, new Callback() {
+                    @Override
+                    public void onSuccess() {
+                        circularProgressBar.setVisibility(View.GONE);
+                    }
+
+                    @Override
+                    public void onError(Exception e) {
+                        circularProgressBar.setVisibility(View.GONE);
+                    }
+                });
 
         //builder.show();
         builder.show();
