@@ -8,6 +8,7 @@ import android.graphics.drawable.ColorDrawable;
 import android.util.Log;
 import android.view.View;
 import android.view.Window;
+import android.view.WindowManager;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 
@@ -37,13 +38,28 @@ public class ImageModal {
 
     private void setup(String url, DialogInterface.OnDismissListener listener) {
         builder = new Dialog(context);
+
         builder.requestWindowFeature(Window.FEATURE_NO_TITLE);
         builder.getWindow().setBackgroundDrawable(
                 new ColorDrawable(android.graphics.Color.TRANSPARENT));
 
+
+        WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
+        lp.copyFrom(builder.getWindow().getAttributes());
+        lp.width = WindowManager.LayoutParams.MATCH_PARENT;
+        lp.height = WindowManager.LayoutParams.MATCH_PARENT;
+
+
+
+
+
+
         builder.setContentView(R.layout.dialog_layout);
         imageButton = (ImageButton) builder.findViewById(R.id.close_modal_btn);
         imageView = (ImageView) builder.findViewById(R.id.image_view);
+
+        imageButton.setBackground(
+                new ColorDrawable(android.graphics.Color.TRANSPARENT));
         imageButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -60,7 +76,12 @@ public class ImageModal {
                 .load(url)
                 .into(imageView);
 
+        //builder.show();
         builder.show();
+        builder.getWindow().setAttributes(lp);
+
+
+
         /*
         Picasso
                 .get()
