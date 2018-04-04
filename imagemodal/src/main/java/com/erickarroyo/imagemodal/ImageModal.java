@@ -58,6 +58,13 @@ public class ImageModal {
         Picasso
                 .get()
                 .load(url)
+                .into(imageView);
+
+        builder.show();
+        /*
+        Picasso
+                .get()
+                .load(url)
                 .into(imageView, new Callback() {
                     @Override
                     public void onSuccess() {
@@ -69,6 +76,7 @@ public class ImageModal {
                         builder.show();
                     }
                 });
+        */
 
     }
 }
